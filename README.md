@@ -1,4 +1,5 @@
-# Competition is a library to manage and run tournaments and other competitive events
+# Competition 
+## Library to manage and run tournaments and other competitive events
 
-See github.com/justinjudd/competition-example for a fully fleshed-out example of how to use it
+See [my competition example](https://github.com/justinjudd/competition-example) for a fully fleshed-out example of how to use it
 
