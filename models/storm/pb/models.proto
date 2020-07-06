@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package dev.justinjudd.org.justin.competition.models.storm.pb;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+//import "google/protobuf/timestamp.proto";
+//import "github.com/golang/protobuf/ptypes/timestamp";
+
+option go_package = "pb";
+
+
+enum Status {
+    NEW = 0;
+    ONGOING = 1;
+    COMPLETED = 2;
+}
+
+enum TournamentType {
+    SINGLE_ELIMINATION = 0;
+    DOUBLE_ELIMINATION = 1;
+    ROUND_ROBIN = 2;
+    COMPASS_DRAW = 3;
+    SWISS_FORMAT = 4;
+    GROUP_PLAY = 5;
+}
+
+
+message Competition {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    string name = 2;
+}
+
+message CompetitionTeam {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    uint64 competitionId = 2;
+    uint64 teamId = 3;
+    int64 score = 4;
+    int64 place = 5;
+}
+
+message Tournament {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    string name = 2;
+    TournamentType type = 3;
+    Status status = 4;
+    uint64 competitionId = 5;
+    bool seeded = 6;
+    uint32 game_size = 7;
+    uint32 advancing = 8;
+    bool scored = 9;
+    repeated string bracket_order = 10;
+    bytes metadata = 11;
+}
+
+message TournamentTeam {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    uint64 tournamentId = 2;
+    uint64 teamId = 3;
+}
+
+message Team {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    string name = 2;
+    uint64 tournamentId = 3;
+    bytes metadata = 4;
+}
+
+message Player {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    string name = 2 [(gogoproto.moretags) = "storm:\"unique\""];
+    uint64 score = 3;
+    bytes metadata = 4;
+}
+
+message PlayerTeam {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    uint64 playerId = 2;
+    uint64 teamId = 3;
+}
+
+message Round {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    Status status = 2;
+    uint64 tournamentId = 3;
+
+}
+
+message Game {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    uint32 arenaId = 2;
+    uint64 roundId = 3;
+    Status status = 4;
+    string bracket = 5;
+}
+
+message GameTeam {
+    uint64 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    uint64 gameId = 2;
+    uint64 teamId = 3;
+    int64 score = 4;
+    int64 place = 5;
+}
+
+message Arena {
+    uint32 id = 1 [(gogoproto.moretags) = "storm:\"id,increment\""];
+    string name = 2;
+}
